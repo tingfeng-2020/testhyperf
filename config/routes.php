@@ -1,0 +1,48 @@
+<?php
+
+declare(strict_types=1);
+/**
+ * This file is part of Hyperf.
+ *
+ * @link     https://www.hyperf.io
+ * @document https://doc.hyperf.io
+ * @contact  group@hyperf.io
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
+use Hyperf\HttpServer\Router\Router;
+
+Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\IndexController@index');
+
+// 设置一个 GET 请求的路由，绑定访问地址 '/get' 到 App\Controller\IndexController 的 get 方法
+//Router::get('/get', 'App\Controller\IndexController::get');
+Router::addRoute(['GET', 'POST', 'HEAD'],'/get', 'App\Controller\IndexController@get');
+Router::addRoute(['GET', 'POST', 'HEAD'],'/parallel', 'App\Controller\IndexController@parallel');
+Router::addRoute(['GET', 'POST', 'HEAD'],'/writeGroup', 'App\Controller\IndexController@writeGroup');
+Router::addRoute(['GET', 'POST', 'HEAD'],'/getFactory', 'App\Controller\IndexController@getFactory');
+Router::addRoute(['GET', 'POST', 'HEAD'],'/getEvent', 'App\Controller\IndexController@getEvent');
+Router::addRoute(['GET', 'POST', 'HEAD'],'/getAspect', 'App\Controller\IndexController@getAspect');
+
+# 登录
+Router::post('/login', 'App\Controller\IndexController@login');
+
+// 获取数据
+Router::addGroup('/v1', function () {
+    Router::get('/refresh-token', 'App\Controller\IndexController@refreshToken');
+    Router::get('/logout', 'App\Controller\IndexController@logout');
+    Router::get('/data', 'App\Controller\IndexController@getData');
+}, ['middleware' => [\Phper666\JWTAuth\Middleware\JWTAuthMiddleware::class]]);
+
+Router::get('/log','App\Controller\IndexController@getLog');
+Router::get('/exception','App\Controller\IndexController@exception');
+
+//Router::get('/get', [\App\Controller\IndexController::class, 'get']);
+
+// 设置一个 POST 请求的路由，绑定访问地址 '/post' 到 App\Controller\IndexController 的 post 方法
+//Router::post('/post', 'App\Controller\IndexController::post');
+//Router::post('/post', 'App\Controller\IndexController@post');
+//Router::post('/post', [\App\Controller\IndexController::class, 'post']);
+
+// 设置一个允许 GET、POST 和 HEAD 请求的路由，绑定访问地址 '/multi' 到 App\Controller\IndexController 的 multi 方法
+//Router::addRoute(['GET', 'POST', 'HEAD'], '/multi', 'App\Controller\IndexController::multi');
+//Router::addRoute(['GET', 'POST', 'HEAD'], '/multi', 'App\Controller\IndexController@multi');
+//Router::addRoute(['GET', 'POST', 'HEAD'], '/multi', [\App\Controller\IndexController::class, 'multi']);

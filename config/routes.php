@@ -35,6 +35,12 @@ Router::addGroup('/v1', function () {
 Router::get('/log','App\Controller\IndexController@getLog');
 Router::get('/exception','App\Controller\IndexController@exception');
 
+Router::addGroup('/user',function (){
+    Router::get('/info/[{id}]','App\Controller\UserController::info');
+});
+//Router::get('/user/{id}', 'App\Controller\UserController@info');
+
+
 //Router::get('/get', [\App\Controller\IndexController::class, 'get']);
 
 // 设置一个 POST 请求的路由，绑定访问地址 '/post' 到 App\Controller\IndexController 的 post 方法

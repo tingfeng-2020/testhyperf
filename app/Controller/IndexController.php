@@ -13,7 +13,9 @@ namespace App\Controller;
 
 use App\Aspect\FooAspect;
 use App\Constants\ErrorCode;
+use App\Exception\ApiException;
 use App\Exception\BusinessException;
+use App\Exception\FooException;
 use App\Service\DemoService;
 use App\Service\UserService;
 use App\Service\UserServiceEvent;
@@ -191,6 +193,7 @@ class IndexController extends AbstractController
     public function exception()
     {
 //        return 'ok';
-        throw new BusinessException(200);
+        throw new ApiException(1000);
+//        throw new BusinessException(200);
     }
 }

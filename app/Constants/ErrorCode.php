@@ -25,6 +25,6 @@ class ErrorCode extends AbstractConstants
 
     public static function getMessage(int $code)
     {
-        return 'ok';
+        return trans("error.{$code}") ?? 'No matching results.';
     }
 }

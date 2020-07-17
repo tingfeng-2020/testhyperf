@@ -12,5 +12,6 @@ declare(strict_types=1);
 return [
     'http' => [
 //        Phper666\JwtAuth\Middleware\JwtAuthMiddleware::class
+        \Hyperf\Validation\Middleware\ValidationMiddleware::class
     ],
 ];

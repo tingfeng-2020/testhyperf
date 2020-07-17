@@ -10,7 +10,7 @@ use Hyperf\HttpServer\Annotation\RequestMapping;
 /**
  * @Controller()
  */
-class UserController
+class UserController extends AbstractController
 {
     // Hyperf 会自动为此方法生成一个 /user/index 的路由，允许通过 GET 或 POST 方式请求
     /**
@@ -28,4 +28,6 @@ class UserController
     {
         return $request->route('id',1);
     }
+
+
 }

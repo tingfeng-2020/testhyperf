@@ -14,10 +14,10 @@
     "require": {
         "php": ">=7.2",
         "ext-swoole": ">=4.5",
-        "hyperf/cache": "~2.0.0",
+        "hyperf/cache": "^2.0",
         "hyperf/command": "~2.0.0",
         "hyperf/config": "~2.0.0",
-        "hyperf/db-connection": "~2.0.0",
+        "hyperf/db-connection": "^2.0",
         "hyperf/framework": "~2.0.0",
         "hyperf/guzzle": "~2.0.0",
         "hyperf/http-server": "~2.0.0",
@@ -27,7 +27,12 @@
         "hyperf/redis": "~2.0.0",
         "phper666/jwt-auth": "^3.0",
         "hyperf/constants": "^2.0",
-        "hyperf/translation": "^2.0"
+        "hyperf/translation": "^2.0",
+        "hyperf/paginator": "^2.0",
+        "hyperf/validation": "^2.0",
+        "donjan-deng/hyperf-permission": "^2.0",
+        "doctrine/dbal": "^2.10",
+        "illuminate/hashing": "^7.20"
     },
     "require-dev": {
         "swoole/ide-helper": "^4.5",

@@ -11,6 +11,39 @@ declare(strict_types=1);
  */
 use Hyperf\HttpServer\Router\Router;
 
+$middleware = [
+    \App\Middleware\JwtAuthMiddleware::class,
+//    App\Middleware\PermissionMiddleware::class,
+];
+
+
+# 登录
+Router::post('/login', 'App\Controller\Admin\UserController@login');
+
+# jwt登陆后才可以访问
+Router::addGroup('/v1', function () {
+    Router::get('/refresh-token', 'App\Controller\Admin\UserController@refreshToken');
+    Router::delete('/logout', 'App\Controller\Admin\UserController@logout');
+    Router::get('/data', 'App\Controller\Admin\UserController@getData');
+    Router::post('/list', 'App\Controller\Admin\UserController@getDefaultData');
+}, ['middleware' => [\Phper666\JWTAuth\Middleware\JWTAuthMiddleware::class]]);
+
+
+Router::addGroup('/v2',function (){
+    Router::get('/users', 'App\Controller\Admin\TestUserController@index');
+    Router::post('/users', 'App\Controller\TestUserController@store');
+    Router::put('/users/{id:\d+}', 'App\Controller\TestUserController@update');
+    Router::get('/users/{id:\d+}', 'App\Controller\TestUserController@show');
+    Router::delete('/users/{id:\d+}', 'App\Controller\TestUserController@delete');
+    Router::put('/users/{id:\d+}/roles', 'App\Controller\TestUserController@roles');
+}, ['middleware' => $middleware]);
+
+
+
+
+
+
+
 Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\IndexController@index');
 
 // 设置一个 GET 请求的路由，绑定访问地址 '/get' 到 App\Controller\IndexController 的 get 方法
@@ -21,16 +54,13 @@ Router::addRoute(['GET', 'POST', 'HEAD'],'/writeGroup', 'App\Controller\IndexCon
 Router::addRoute(['GET', 'POST', 'HEAD'],'/getFactory', 'App\Controller\IndexController@getFactory');
 Router::addRoute(['GET', 'POST', 'HEAD'],'/getEvent', 'App\Controller\IndexController@getEvent');
 Router::addRoute(['GET', 'POST', 'HEAD'],'/getAspect', 'App\Controller\IndexController@getAspect');
+Router::addRoute(['GET', 'POST', 'HEAD'],'/page', 'App\Controller\IndexController@getPage');
+Router::addRoute(['GET', 'POST', 'HEAD'],'/translator', 'App\Controller\IndexController@translator');
+Router::addRoute(['GET', 'POST', 'HEAD'],'/validate', 'App\Controller\IndexController@validate');
+Router::addRoute(['GET', 'POST', 'HEAD'],'/validateSecond', 'App\Controller\IndexController@validateSecond');
+Router::addRoute(['GET', 'POST', 'HEAD'],'/seeds', 'App\Controller\IndexController@seeds');
 
-# 登录
-Router::post('/login', 'App\Controller\IndexController@login');
 
-// 获取数据
-Router::addGroup('/v1', function () {
-    Router::get('/refresh-token', 'App\Controller\IndexController@refreshToken');
-    Router::get('/logout', 'App\Controller\IndexController@logout');
-    Router::get('/data', 'App\Controller\IndexController@getData');
-}, ['middleware' => [\Phper666\JWTAuth\Middleware\JWTAuthMiddleware::class]]);
 
 Router::get('/log','App\Controller\IndexController@getLog');
 Router::get('/exception','App\Controller\IndexController@exception');

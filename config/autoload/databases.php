@@ -46,7 +46,7 @@ return [
             PDO::ATTR_EMULATE_PREPARES => false,
         ],
     ],
-    'test' => [
+    'mysql' => [
         'driver' => env('DB_DRIVER', 'mysql'),
         'host' => env('DB_HOST', 'localhost'),
         'database' => env('DB_DATABASE', 'hyperf'),

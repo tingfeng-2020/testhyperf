@@ -12,12 +12,12 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Hyperf\Contract\ConfigInterface;
 use Donjan\Permission\Exceptions\UnauthorizedException;
-use App\Model\Permission;
 
 class PermissionMiddleware implements MiddlewareInterface
 {
 
     /**
+     * 路由权限认证
      * @Inject
      * @var ConfigInterface
      */
@@ -25,18 +25,21 @@ class PermissionMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        //去掉路由参数
-        $dispatcher = $request->getAttribute('Hyperf\HttpServer\Router\Dispatched');
-        $route = $dispatcher->handler->route;
-//        $path = '/' . $this->config->get('app_name') . $route . '/' . $request->getMethod();
-        $path = strtolower($route);
-//        echo $request->getMethod();
-        $permission = Permission::getPermissions(['name' => $path])->first();
+        $uri = $request->getUri();
+        $path = $uri->getPath();
+        $method = $request->getMethod();
+//        echo 'uri:'.$uri.'--'.PHP_EOL;
+//        echo 'path:'.$path.'--'.PHP_EOL;
+//        echo 'method:'.$method.'--'.PHP_EOL;
+
+        //拼接路由参数
+        $name = strtolower($path.'/'.$method);
         $user = $request->getAttribute('user');
-        if ($user && (!$permission || ($permission && $user->checkPermissionTo($permission)))) {
+        //是否有权限
+        if ($user && $user->can($name)) {
             return $handler->handle($request);
         }
-        throw new UnauthorizedException('无权进行该操作', 403);
+        throw new UnauthorizedException('无权进行该操作/请联系管理人员.', 403);
     }
 
 }

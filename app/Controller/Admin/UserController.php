@@ -38,8 +38,8 @@ class UserController extends AbstractController
         if ($username && $password) {
 //            todo 查询users表，验证账号密码是否正确
             $userData = [
-                'uid' => 2, // 如果使用单点登录，必须存在配置文件中的sso_key的值，一般设置为用户的id
-                'username' => 'sasdxx',
+                'uid' => 1, // 如果使用单点登录，必须存在配置文件中的sso_key的值，一般设置为用户的id
+                'username' => 'admin',
             ];
             // 使用默认场景登录
             $token = $this->jwt->setScene('default')->getToken($userData);

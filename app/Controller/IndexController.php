@@ -297,13 +297,19 @@ class IndexController extends AbstractController
 
     public function seeds()
     {
+        $role = Role::where("id",1)->first();
+//        $ss = Permission::create(['name' => 'users.get','display_name'=>'测试权限','url'=>'admin.users.get']);
+
+        $permission = Permission::findById(4);
+//        return $permission;
+
         //创建一个角色
 //        $role = Role::create(['name' => '管理员','description'=>'']);
         //创建权限
 //        $permission = Permission::create(['name' => 'user-center/user/get','display_name'=>'用户管理','url'=>'user-center/user']);
 //        $permission = Permission::create(['name' => 'user-center/user/post','display_name'=>'创建用户','parent_id'=>2]);
         //为角色分配一个权限
-//        $role->givePermissionTo($permission);
+//        return $role->givePermissionTo($permission);
 //        $role->syncPermissions($permissions);//多个
 //        $role->syncPermissions([1]);
         //权限添加到一个角色
@@ -322,6 +328,7 @@ class IndexController extends AbstractController
 //            'real_name' => '超级管理员'
 //        ]);
         $user = User::query()->where('user_id',1)->first();
+//        var_dump($user)
 //        return $user->givePermissionTo('user-center/user/get','user-center/user/post');
 ////为用户分配角色
 //        return $user->assignRole('管理员');
@@ -339,12 +346,15 @@ class IndexController extends AbstractController
 //        return $user->getRoleNames();
 //        $permission->roles;
 ////获取所有权限
-//       return $user->getAllPermissions();
+///
+// $permission = Permission::getPermissions(['name' => 'user-center/user/post'])->first();
+// return $permission;
+       return $user->getAllPermissions();
 //        $role->permissions;
 ////获取树形菜单
 //       return $user->getMenu();
 ////验证
-//       return $user->can('user-center/user/gets');
+       return $user->can('user-center/user/gets');
 //        $user->can($permission->id);
 //        $user->can($permission);
 //        $user->hasAnyPermission([$permission1,$permission2]);

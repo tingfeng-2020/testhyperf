@@ -6,7 +6,7 @@ namespace App\Model;
 use Donjan\Permission\Traits\HasRoles;
 use Hyperf\DbConnection\Model\Model;
 
-class User extends Model
+class User extends \App\Model\Model
 {
     use HasRoles;
 

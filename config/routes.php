@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 /**
+ * 路由权限表 permissions => name字段关联路由验证：验证规则（url+请求方法 Method）url 字段：路由访问url
+ * 赋予权限：1.通过默认的权限接口方法增删权限，2.通过脚本自动添加...dev
  * This file is part of Hyperf.
  *
  * @link     https://www.hyperf.io
@@ -12,8 +14,8 @@ declare(strict_types=1);
 use Hyperf\HttpServer\Router\Router;
 
 $middleware = [
-    \App\Middleware\JwtAuthMiddleware::class,
-//    App\Middleware\PermissionMiddleware::class,
+    App\Middleware\JwtAuthMiddleware::class,
+    App\Middleware\PermissionMiddleware::class,
 ];
 
 
@@ -29,18 +31,24 @@ Router::addGroup('/v1', function () {
 }, ['middleware' => [\Phper666\JWTAuth\Middleware\JWTAuthMiddleware::class]]);
 
 
-Router::addGroup('/v2',function (){
-    Router::get('/users', 'App\Controller\Admin\TestUserController@index');
-    Router::post('/users', 'App\Controller\TestUserController@store');
-    Router::put('/users/{id:\d+}', 'App\Controller\TestUserController@update');
-    Router::get('/users/{id:\d+}', 'App\Controller\TestUserController@show');
-    Router::delete('/users/{id:\d+}', 'App\Controller\TestUserController@delete');
-    Router::put('/users/{id:\d+}/roles', 'App\Controller\TestUserController@roles');
-}, ['middleware' => $middleware]);
+//Router::addGroup('/v2',function (){
+//    Router::get('/users', 'App\Controller\Admin\TestUserController@index');
+//    Router::post('/users', 'App\Controller\TestUserController@store');
+//    Router::put('/users/{id:\d+}', 'App\Controller\TestUserController@update');
+//    Router::get('/users/{id:\d+}', 'App\Controller\TestUserController@show');
+//    Router::delete('/users/{id:\d+}', 'App\Controller\TestUserController@delete');
+//    Router::put('/users/{id:\d+}/roles', 'App\Controller\TestUserController@roles');
+//}, ['middleware' => $middleware]);
 
 
 
-
+//User
+Router::get('/users', 'App\Controller\Admin\TestUserController@index', ['middleware' => $middleware]);
+Router::post('/users', 'App\Controller\UserController@store', ['middleware' => $middleware]);
+Router::put('/users/{id:\d+}', 'App\Controller\UserController@update', ['middleware' => $middleware]);
+Router::get('/users/{id:\d+}', 'App\Controller\UserController@show', ['middleware' => $middleware]);
+Router::delete('/users/{id:\d+}', 'App\Controller\UserController@delete', ['middleware' => $middleware]);
+Router::put('/users/{id:\d+}/roles', 'App\Controller\UserController@roles', ['middleware' => $middleware]);
 
 
 

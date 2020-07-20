@@ -23,6 +23,7 @@ class TestUserController extends AbstractController
     //get
     public function index(RequestInterface $request)
     {
+        return 'sucess';
 //        $params = $this->request->input('username');
         $username = $request->all();
 //        var_dump($username);
